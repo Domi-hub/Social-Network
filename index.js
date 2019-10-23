@@ -4,6 +4,7 @@ const compression = require("compression");
 const db = require("./db");
 const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bcrypt");
+const csurf = require("csurf");
 
 app.use(compression()); //it compresses our responses, should be always used!!!!
 
@@ -22,6 +23,13 @@ app.use(
         extended: false
     })
 );
+
+app.use(csurf());
+
+app.use(function(req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -56,6 +64,27 @@ app.post("/register", (req, res) => {
                 res.render("register", { error: true });
             });
     });
+});
+
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+
+    db.getUser(email)
+        .then(result => {
+            const user = result.rows[0];
+            return compare(password, user.password).then(isValid => {
+                if (isValid) {
+                    req.session.userId = user.user_id;
+                    req.session.signatureId = user.signature_id;
+                    res.json();
+                } else {
+                    res.render("/", { error: true });
+                }
+            });
+        })
+        .catch(() => {
+            res.render("login", { error: true });
+        });
 });
 
 //DO NOT DELETE - matches all urls

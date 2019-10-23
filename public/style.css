@@ -1,3 +1,17 @@
 * {
-    background-color: salmon;
+    box-sizing: border-box;
+}
+
+html {
+    background: url(lemonade.jpeg) no-repeat center center fixed;
+    background-color: black;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.welcomeLogo {
+    height: 30px;
+    width: 50px;
 }
