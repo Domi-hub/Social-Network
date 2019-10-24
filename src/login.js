@@ -14,7 +14,7 @@ export default class Login extends React.Component {
         });
     }
 
-    submit() {
+    login() {
         if (this.state.email.indexOf("@") == -1) {
             return this.seState({
                 error: true
@@ -22,7 +22,7 @@ export default class Login extends React.Component {
         }
 
         axios
-            .post("/register", {
+            .post("/login", {
                 email: this.state.email,
                 password: this.state.password
             })
@@ -43,9 +43,18 @@ export default class Login extends React.Component {
                 {this.state.error && (
                     <div className="error">Oops! That was your fault</div>
                 )}
-                <input name="email" onChange={e => this.handleChange(e)} />
-                <input name="password" onChange={e => this.handleChange(e)} />
-                <button onClick={() => this.submit()}>submit</button>
+                <input
+                    name="email"
+                    placeholder="Email"
+                    onChange={e => this.handleChange(e)}
+                />
+                <input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    onChange={e => this.handleChange(e)}
+                />
+                <button onClick={() => this.login()}>LOG IN</button>
                 <Link to="/">Click here to Register!</Link>
             </div>
         );

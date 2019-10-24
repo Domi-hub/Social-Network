@@ -11,7 +11,14 @@ html {
     background-size: cover;
 }
 
+h1 {
+    font-family: Stencil Std, fantasy;
+    color: white;
+    font-size: 50px;
+    font-weight: 600;
+}
+
 .welcomeLogo {
-    height: 30px;
-    width: 50px;
+    height: 100px;
+    width: 200px;
 }

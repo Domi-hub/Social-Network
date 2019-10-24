@@ -26,7 +26,7 @@ app.use(
 
 app.use(csurf());
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
     res.cookie("mytoken", req.csrfToken());
     next();
 });
@@ -42,12 +42,12 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
-app.get("/welcome", function(req, res) {
-    // if (req.sesssion.userId) {
-    //     res.redirect("/");
-    // } else {
-    res.sendFile(__dirname + "/index.html");
-    // }
+app.get("/welcome", (req, res) => {
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
 });
 
 app.post("/register", (req, res) => {
@@ -56,12 +56,11 @@ app.post("/register", (req, res) => {
     hash(password).then(hash => {
         db.addUser(firstName, lastName, email, hash)
             .then(result => {
-                req.session.userId = result.rows[0].id;
-                res.json();
+                console.log("res", result.rows[0]);
             })
             .catch(e => {
                 console.log(e);
-                res.render("register", { error: true });
+                res.json("/register", { error: true });
             });
     });
 });
@@ -74,17 +73,25 @@ app.post("/login", (req, res) => {
             const user = result.rows[0];
             return compare(password, user.password).then(isValid => {
                 if (isValid) {
-                    req.session.userId = user.user_id;
-                    req.session.signatureId = user.signature_id;
+                    req.session.userId = user.id;
                     res.json();
                 } else {
-                    res.render("/", { error: true });
+                    res.json("/login", { error: true });
                 }
             });
         })
-        .catch(() => {
-            res.render("login", { error: true });
+        .catch(e => {
+            console.log(e);
+            // show error
         });
+});
+
+app.get("/welcome", function(req, res) {
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
 });
 
 //DO NOT DELETE - matches all urls
@@ -97,6 +104,6 @@ app.get("*", function(req, res) {
 });
 //DO NOT DELETE
 
-app.listen(8080, function() {
+app.listen(8080, () => {
     console.log("I'm listening.");
 });

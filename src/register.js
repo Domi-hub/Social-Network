@@ -16,7 +16,7 @@ export default class Register extends React.Component {
     componentDidMount() {
         console.log(location);
     }
-    submit() {
+    register() {
         if (this.state.email.indexOf("@") == -1) {
             return this.setState({
                 error: true
@@ -47,11 +47,28 @@ export default class Register extends React.Component {
                 {this.state.error && (
                     <div className="error">Oops! That was your fault</div>
                 )}
-                <input name="firstName" onChange={e => this.handleChange(e)} />
-                <input name="lastName" onChange={e => this.handleChange(e)} />
-                <input name="email" onChange={e => this.handleChange(e)} />
-                <input name="password" onChange={e => this.handleChange(e)} />
-                <button onClick={() => this.submit()}>submit</button>
+                <input
+                    name="firstName"
+                    placeholder="First Name"
+                    onChange={e => this.handleChange(e)}
+                />
+                <input
+                    name="lastName"
+                    placeholder="Last Name"
+                    onChange={e => this.handleChange(e)}
+                />
+                <input
+                    name="email"
+                    placeholder="Email"
+                    onChange={e => this.handleChange(e)}
+                />
+                <input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    onChange={e => this.handleChange(e)}
+                />
+                <button onClick={() => this.register()}>REGISTER</button>
                 <Link to="/login">Click here to Log in!</Link>
             </div>
         );
