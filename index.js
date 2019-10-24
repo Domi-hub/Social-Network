@@ -56,7 +56,10 @@ app.post("/register", (req, res) => {
     hash(password).then(hash => {
         db.addUser(firstName, lastName, email, hash)
             .then(result => {
+                const user = result.rows[0];
                 console.log("res", result.rows[0]);
+                req.session.userId = user.id;
+                res.json("/welcome");
             })
             .catch(e => {
                 console.log(e);
@@ -74,7 +77,7 @@ app.post("/login", (req, res) => {
             return compare(password, user.password).then(isValid => {
                 if (isValid) {
                     req.session.userId = user.id;
-                    res.json();
+                    res.json("/welcome");
                 } else {
                     res.json("/login", { error: true });
                 }
