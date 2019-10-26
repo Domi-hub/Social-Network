@@ -12,7 +12,7 @@ module.exports.addUser = (firstName, lastName, email, password) => {
     );
 };
 
-module.exports.getUser = email => {
+module.exports.getUserByEmail = email => {
     return db.query(
         `
         SELECT *
@@ -20,5 +20,37 @@ module.exports.getUser = email => {
         WHERE email = $1;
         `,
         [email]
+    );
+};
+
+module.exports.getUserById = userId => {
+    return db.query(
+        `
+        SELECT *
+        FROM users
+        WHERE id = $1;
+        `,
+        [userId]
+    );
+};
+
+module.exports.updateImage = (imageUrl, userId) => {
+    return db.query(
+        `
+        UPDATE users
+        SET image_url = $1
+        WHERE id = $2;
+        `,
+        [imageUrl, userId]
+    );
+};
+
+module.exports.getImageById = userId => {
+    return db.query(
+        `
+        SELECT image_url
+        FROM users
+        WHERE id = $1;
+        `[userId]
     );
 };

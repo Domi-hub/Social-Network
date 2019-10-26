@@ -7,6 +7,6 @@ CREATE TABLE users
     last_name VARCHAR(255) NOT NULL,
     email VARCHAR NOT NULL UNIQUE,
     password VARCHAR NOT NULL,
-    profile_url VARCHAR(300),
+    image_url VARCHAR(300),
     bio TEXT
 )

@@ -5,6 +5,31 @@ const db = require("./db");
 const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bcrypt");
 const csurf = require("csurf");
+const s3 = require("./s3");
+const { s3Url } = require("./config");
+const uidSafe = require("uid-safe");
+const multer = require("multer");
+const path = require("path");
+
+const diskStorage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function(req, file, callback) {
+        uidSafe(24).then(function(uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    }
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152
+    }
+});
+
+uidSafe(24);
 
 app.use(compression()); //it compresses our responses, should be always used!!!!
 
@@ -57,7 +82,6 @@ app.post("/register", (req, res) => {
         db.addUser(firstName, lastName, email, hash)
             .then(result => {
                 const user = result.rows[0];
-                console.log("res", result.rows[0]);
                 req.session.userId = user.id;
                 res.json("/welcome");
             })
@@ -71,7 +95,7 @@ app.post("/register", (req, res) => {
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
 
-    db.getUser(email)
+    db.getUserByEmail(email)
         .then(result => {
             const user = result.rows[0];
             return compare(password, user.password).then(isValid => {
@@ -83,9 +107,22 @@ app.post("/login", (req, res) => {
                 }
             });
         })
-        .catch(e => {
-            console.log(e);
-            // show error
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
+app.get("/user", (req, res) => {
+    const userId = req.session.userId;
+
+    db.getUserById(userId)
+        .then(result => {
+            res.json(result.rows[0]);
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
         });
 });
 
@@ -95,6 +132,22 @@ app.get("/welcome", function(req, res) {
     } else {
         res.sendFile(__dirname + "/index.html");
     }
+});
+
+app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {
+    const imageUrl = `${s3Url}${req.file.filename}`;
+    const userId = req.session.userId;
+
+    db.updateImage(imageUrl, userId)
+        .then(() => {
+            res.json({
+                imageUrl: imageUrl
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
 });
 
 //DO NOT DELETE - matches all urls

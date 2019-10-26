@@ -16,7 +16,7 @@ export default class Login extends React.Component {
 
     login() {
         if (this.state.email.indexOf("@") == -1) {
-            return this.seState({
+            return this.setState({
                 error: true
             });
         }

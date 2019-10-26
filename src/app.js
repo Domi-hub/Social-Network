@@ -1,59 +1,52 @@
 import React from "react";
 import { ProfilePic } from "./profile-pic";
 import Uploader from "./uploader";
+import axios from "./axios";
 
 export class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            first: "Pete",
-            last: "Anderson",
-            img: "",
+            firstName: "",
+            lastName: "",
+            imageUrl: "",
             uploaderIsVisible: false
         };
-        this.toggleMOdal = this.toggleModal.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.setImage = this.setImage.bind(this);
     }
 
-    componentDidMOunt() {
-        console.log("App mounted");
-        //this is where we want to make an axios request
-        //a GET request to a route called "/user"
-        //when we get a response we want to put the info into state...
-        //this.setState
+    async componentDidMount() {
+        axios.get("/user").then(({ data }) => {
+            this.setState({
+                firstName: data.first_name,
+                lastName: data.last_name,
+                imageUrl: data.image_url
+            });
+        });
     }
+
     toggleModal() {
-        console.log("I am toggleModal...");
-
         this.setState({ uploaderIsVisible: !this.state.uploaderIsVisible });
-
-        // if (this.state.uploaderIsVisible) {
-        //     this.setState({ uploaderIsVisible: false });
-        // } else {
-        //     this.setState({ uploaderIsVisible: true });
-        // }
     }
-    methodInApp(muffin) {
-        console.log("I am a method running in APP!");
-        console.log("muffin: ", muffin);
-        this.setState({ muffin: muffin });
+
+    setImage(imageUrl) {
+        this.setState({ imageUrl: imageUrl });
     }
 
     render() {
-        // use it as sanity check
         return (
-            <React.Fragment>
-                <div on Click={this.toggleMOdal}>
-                    Hello from App!
-                </div>
+            <div>
+                <h1 onClick={this.toggleModal}>Hello from App!</h1>
                 <ProfilePic
-                    firstName={this.state.first}
-                    lastName={this.state.first}
-                    imgUrl={this.state.img}
+                    firstName={this.state.firstName}
+                    lastName={this.state.lastName}
+                    imageUrl={this.state.imageUrl}
                 />
                 {this.state.uploaderIsVisible && (
-                    <Uploader methodInApp={this.methodInApp} />
+                    <Uploader setImage={this.setImage} />
                 )}
-            </React.Fragment>
+            </div>
         );
     }
 }
