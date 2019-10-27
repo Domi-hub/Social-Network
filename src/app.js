@@ -11,10 +11,12 @@ export class App extends React.Component {
             firstName: "",
             lastName: "",
             imageUrl: "",
+            bio: "",
             uploaderIsVisible: false
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.setImage = this.setImage.bind(this);
+        this.setBio = this.setBio.bind(this);
     }
 
     async componentDidMount() {
@@ -22,22 +24,22 @@ export class App extends React.Component {
             this.setState({
                 firstName: data.first_name,
                 lastName: data.last_name,
-                imageUrl: data.image_url
+                imageUrl: data.image_url,
+                bio: data.bio
             });
         });
     }
 
     toggleModal() {
         this.setState({ uploaderIsVisible: !this.state.uploaderIsVisible });
-        // if (this.state.uploaderIsVisible) {
-        //     this.setState({ uploaderIsVisible: false });
-        // } else {
-        //     this.setState({ uploaderIsVisible: true });
-        // }
     }
 
     setImage(imageUrl) {
         this.setState({ imageUrl: imageUrl });
+    }
+
+    setBio(bio) {
+        this.setState({ bio: bio });
     }
 
     render() {

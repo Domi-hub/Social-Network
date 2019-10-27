@@ -45,22 +45,13 @@ module.exports.updateImage = (imageUrl, userId) => {
     );
 };
 
-module.exports.getImageById = userId => {
-    return db.query(
-        `
-        SELECT image_url
-        FROM users
-        WHERE id = $1;
-        `[userId]
-    );
-};
-
 module.exports.updateBio = (bio, userId) => {
     return db.query(
         `
         UPDATE users
         SET bio = $1
         WHERE id = $2;
-        `[(bio, userId)]
+        `,
+        [bio, userId]
     );
 };

@@ -4,7 +4,9 @@ import axios from "./axios";
 export default class Uploader extends React.Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            image: null
+        };
     }
 
     upload() {

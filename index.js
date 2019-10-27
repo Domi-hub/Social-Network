@@ -12,10 +12,10 @@ const multer = require("multer");
 const path = require("path");
 
 const diskStorage = multer.diskStorage({
-    destination: function(req, file, callback) {
+    destination: (req, file, callback) => {
         callback(null, __dirname + "/uploads");
     },
-    filename: function(req, file, callback) {
+    filename: (req, file, callback) => {
         uidSafe(24).then(function(uid) {
             callback(null, uid + path.extname(file.originalname));
         });
@@ -126,7 +126,7 @@ app.get("/user", (req, res) => {
         });
 });
 
-app.get("/welcome", function(req, res) {
+app.get("/welcome", (req, res) => {
     if (req.session.userId) {
         res.redirect("/");
     } else {
@@ -150,8 +150,24 @@ app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {
         });
 });
 
+app.post("/bio", (req, res) => {
+    const { bio } = req.body;
+    const userId = req.session.userId;
+
+    db.updateBio(bio, userId)
+        .then(() => {
+            res.json({
+                bio: bio
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
 //DO NOT DELETE - matches all urls
-app.get("*", function(req, res) {
+app.get("*", (req, res) => {
     if (!req.session.userId) {
         res.redirect("/welcome");
     } else {

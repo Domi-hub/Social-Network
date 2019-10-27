@@ -18,7 +18,7 @@ export default class Profile extends React.Component {
                     firstName={this.props.firstName}
                     imageUrl={this.props.imageUrl}
                 />
-                <Bio />
+                <Bio bio={this.props.bio} setBio={this.props.setBio} />
             </div>
         );
     }
