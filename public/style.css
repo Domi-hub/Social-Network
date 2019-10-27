@@ -18,14 +18,25 @@ h1 {
     font-weight: 600;
 }
 
+.main {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .welcomeLogo {
     height: 100px;
     width: 200px;
 }
 
-.profileLogp {
-    height: 100px;
-    width: 100px;
+.profileLogo {
+    height: 80px;
+    width: 80px;
 }
 
 img {
@@ -33,10 +44,25 @@ img {
     height: 80px;
 }
 
+/* PROFILE CONTAINER */
 .profile {
-    background-color: white;
+    margin-top: 100px;
     width: 400px;
     height: 400px;
+}
+
+/* UPLOADER */
+.uploader {
+    margin-top: 100px;
+    margin-left: 520px;
+    background-color: white;
+    width: 500px;
+    height: 100px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.9;
 }
 
 /* BIO */
@@ -46,4 +72,9 @@ img {
     background-color: black;
     font-weight: bold;
     color: white;
+}
+
+.profile-pic {
+    width: 400px;
+    height: 400px;
 }

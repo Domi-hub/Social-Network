@@ -25,7 +25,7 @@ export default class Uploader extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="uploader">
                 <input
                     name="image"
                     type="file"

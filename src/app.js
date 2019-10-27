@@ -45,23 +45,27 @@ export class App extends React.Component {
     render() {
         return (
             <div>
-                <img className="profileLogo" src="logo1.jpg" />
-                <ProfilePic
-                    imageUrl={this.state.imageUrl}
-                    onClick={this.toggleModal}
-                />
-                <Profile
-                    id={this.state.id}
-                    firstName={this.state.firstName}
-                    lastName={this.state.lastName}
-                    imageUrl={this.state.imageUrl}
-                    onClick={this.showUploader}
-                    bio={this.state.bio}
-                    setBio={this.setBio}
-                />
-                {this.state.uploaderIsVisible && (
-                    <Uploader setImage={this.setImage} />
-                )}
+                <div className="main">
+                    <img className="profileLogo" src="logo1.jpg" />
+                    <ProfilePic
+                        imageUrl={this.state.imageUrl}
+                        onClick={this.toggleModal}
+                    />
+                </div>
+                <div className="body">
+                    {this.state.uploaderIsVisible && (
+                        <Uploader setImage={this.setImage} />
+                    )}
+                    <Profile
+                        id={this.state.id}
+                        firstName={this.state.firstName}
+                        lastName={this.state.lastName}
+                        imageUrl={this.state.imageUrl}
+                        onClick={this.showUploader}
+                        bio={this.state.bio}
+                        setBio={this.setBio}
+                    />
+                </div>
             </div>
         );
     }
