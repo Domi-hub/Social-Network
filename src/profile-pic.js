@@ -1,13 +1,10 @@
 import React from "react";
 
-export function ProfilePic({ firstName, lastName, imageUrl }) {
+export function ProfilePic({ firstName, lastName, imageUrl, onClick }) {
     imageUrl = imageUrl || "/default.jpeg";
     return (
         <div>
-            <h2>
-                {firstName} {lastName}
-            </h2>
-            <img src={imageUrl} alt={lastName} />
+            <img src={imageUrl} alt={lastName} onClick={onClick} />
         </div>
     );
 }

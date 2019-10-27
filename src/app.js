@@ -28,6 +28,11 @@ export class App extends React.Component {
 
     toggleModal() {
         this.setState({ uploaderIsVisible: !this.state.uploaderIsVisible });
+        // if (this.state.uploaderIsVisible) {
+        //     this.setState({ uploaderIsVisible: false });
+        // } else {
+        //     this.setState({ uploaderIsVisible: true });
+        // }
     }
 
     setImage(imageUrl) {
@@ -37,11 +42,10 @@ export class App extends React.Component {
     render() {
         return (
             <div>
-                <h1 onClick={this.toggleModal}>Hello from App!</h1>
+                <img className="profileLogo" src="logo1.jpg" />
                 <ProfilePic
-                    firstName={this.state.firstName}
-                    lastName={this.state.lastName}
                     imageUrl={this.state.imageUrl}
+                    onClick={this.toggleModal}
                 />
                 {this.state.uploaderIsVisible && (
                     <Uploader setImage={this.setImage} />
