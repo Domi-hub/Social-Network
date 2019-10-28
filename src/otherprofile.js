@@ -8,30 +8,39 @@ export class OtherProfile extends React.Component {
         super();
         this.state = {};
     }
-    componentDidMount() {
-        console.log("I am mounting"); //sanity check
-        console.log("thi.props.match", this.props.match.params.id); //found an id we want to render
 
-        //make an axios request to the server asking for info about this.props.match.params.
-        //if there is no user with that id... redirect them back to /.
-        // and the user is trying to visit their own page redirect them back to /.
-        if (this.props.match.params.id == 6) {
-            //imagine i am logged in as user ž.
-            this.props.history.push("/");
-        }
+    async componentDidMount() {
+        const userId = this.props.match.params.id;
+        axios
+            .get("/api/user/" + userId)
+            .then(({ data, status }) => {
+                if (status == 204) {
+                    this.props.history.push("/");
+                } else {
+                    this.setState({
+                        firstName: data.first_name,
+                        lastName: data.last_name,
+                        imageUrl: data.image_url,
+                        bio: data.bio
+                    });
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     render() {
         return (
             <div className="profile">
                 <h2>
-                    {this.props.firstName} {this.props.lastName}
+                    {this.state.firstName} {this.state.lastName}
                 </h2>
                 <ProfilePic
-                    firstName={this.props.firstName}
-                    imageUrl={this.props.imageUrl}
+                    firstName={this.state.firstName}
+                    imageUrl={this.state.imageUrl}
                 />
-                <Bio bio={this.props.bio} setBio={this.props.setBio} />
+                <Bio bio={this.state.bio} />
             </div>
         );
     }

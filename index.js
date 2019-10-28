@@ -126,6 +126,29 @@ app.get("/user", (req, res) => {
         });
 });
 
+app.get("/api/user/:id", (req, res) => {
+    const userId = req.params.id;
+    const loggedInUserId = req.session.userId;
+
+    if (userId == loggedInUserId) {
+        res.sendStatus(204);
+        return;
+    }
+
+    db.getUserById(userId)
+        .then(result => {
+            if (result.rows == 0) {
+                res.sendStatus(204);
+            } else {
+                res.json(result.rows[0]);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
 app.get("/welcome", (req, res) => {
     if (req.session.userId) {
         res.redirect("/");

@@ -10,6 +10,7 @@ export class App extends React.Component {
     constructor() {
         super();
         this.state = {
+            userId: "",
             firstName: "",
             lastName: "",
             imageUrl: "",
@@ -24,6 +25,7 @@ export class App extends React.Component {
     async componentDidMount() {
         axios.get("/user").then(({ data }) => {
             this.setState({
+                userId: data.id,
                 firstName: data.first_name,
                 lastName: data.last_name,
                 imageUrl: data.image_url,
@@ -52,9 +54,8 @@ export class App extends React.Component {
                         <Route
                             exact
                             path="/"
-                            render={props => (
+                            render={() => (
                                 <Profile
-                                    id={this.state.id}
                                     firstName={this.state.firstName}
                                     lastName={this.state.lastName}
                                     imageUrl={this.state.imageUrl}
