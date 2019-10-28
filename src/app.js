@@ -3,6 +3,8 @@ import { ProfilePic } from "./profile-pic";
 import Uploader from "./uploader";
 import axios from "./axios";
 import Profile from "./profile";
+import { BrowserRouter, Route } from "react-router-dom";
+import { OtherProfile } from "./otherprofile";
 
 export class App extends React.Component {
     constructor() {
@@ -44,29 +46,48 @@ export class App extends React.Component {
 
     render() {
         return (
-            <div>
-                <div className="main">
-                    <img className="profileLogo" src="logo1.jpg" />
-                    <ProfilePic
-                        imageUrl={this.state.imageUrl}
-                        onClick={this.toggleModal}
-                    />
+            <BrowserRouter>
+                <div>
+                    <div>
+                        <Route
+                            exact
+                            path="/"
+                            render={props => (
+                                <Profile
+                                    id={this.state.id}
+                                    firstName={this.state.firstName}
+                                    lastName={this.state.lastName}
+                                    imageUrl={this.state.imageUrl}
+                                    onClick={this.showUploader}
+                                    bio={this.state.bio}
+                                    setBio={this.setBio}
+                                />
+                            )}
+                        />
+
+                        <Route
+                            exact
+                            path="/user/:id"
+                            component={OtherProfile}
+                        />
+                    </div>
+
+                    <div className="main">
+                        <img className="profileLogo" src="/logo1.jpg" />
+                        <ProfilePic
+                            imageUrl={this.state.imageUrl}
+                            onClick={this.toggleModal}
+                        />
+                    </div>
+
+                    <div className="body">
+                        {this.state.uploaderIsVisible && (
+                            <Uploader setImage={this.setImage} />
+                        )}
+                    </div>
+                    <footer>Dominika Tazikova 2019</footer>
                 </div>
-                <div className="body">
-                    {this.state.uploaderIsVisible && (
-                        <Uploader setImage={this.setImage} />
-                    )}
-                    <Profile
-                        id={this.state.id}
-                        firstName={this.state.firstName}
-                        lastName={this.state.lastName}
-                        imageUrl={this.state.imageUrl}
-                        onClick={this.showUploader}
-                        bio={this.state.bio}
-                        setBio={this.setBio}
-                    />
-                </div>
-            </div>
+            </BrowserRouter>
         );
     }
 }

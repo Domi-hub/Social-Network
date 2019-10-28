@@ -8,7 +8,7 @@ export default function Welcome() {
         <div>
             <h1>Welcome to </h1>
             <h1>Lemonade</h1>
-            <img className="welcomeLogo" src="logo1.jpg" />
+            <img className="welcomeLogo" src="/logo1.jpg" />
             <HashRouter>
                 <div>
                     <Route exact path="/" component={Register} />
