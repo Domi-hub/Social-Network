@@ -79,6 +79,12 @@ img {
     height: 400px;
 }
 
+.find-people {
+    margin-top: 100px;
+    width: 400px;
+    height: 400px;
+}
+
 footer {
     position: fixed;
     left: 0;

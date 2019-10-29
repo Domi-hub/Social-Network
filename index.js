@@ -149,6 +149,18 @@ app.get("/api/user/:id", (req, res) => {
         });
 });
 
+app.get("/api/users/:query", (req, res) => {
+    const query = req.params.query;
+    db.getMatchingUsers(query)
+        .then(result => {
+            res.json(result.rows);
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
 app.get("/welcome", (req, res) => {
     if (req.session.userId) {
         res.redirect("/");

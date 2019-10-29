@@ -55,3 +55,15 @@ module.exports.updateBio = (bio, userId) => {
         [bio, userId]
     );
 };
+
+module.exports.getMatchingUsers = query => {
+    return db.query(
+        `
+        SELECT id, first_name, last_name, image_url
+        FROM users
+        WHERE first_name ILIKE $1
+        OR last_name ILIKE $1;
+        `,
+        [query + "%"]
+    );
+};
