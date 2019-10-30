@@ -1,28 +1,34 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import axios from "axios";
 
 export default function Findpeople() {
-    const [users, setUser] = useState([]);
+    const [users, setUsers] = useState([]);
     const [userInput, setUserInput] = useState("");
 
     useEffect(() => {
-        // let ignore = false;
+        let ignore = false;
         (async () => {
             console.log("userInput: ", userInput);
             const { data } = await axios.get("/api/users/" + userInput);
-            console.log(data);
-            // if (!ignore) {
-            //     setUser(data);
-            // } else {
-            //     console.log("ignored!!!");
-            // }
+            console.log("Data: ", data);
+            if (!userInput) {
+                // const { data } = await axios.get("/api/users/");
+                // setUsers(data);
+            } else {
+                const { data } = await axios.get("/api/users/" + userInput);
+                if (!ignore) {
+                    setUsers(data);
+                } else {
+                    console.log("ignored!!!");
+                }
+            }
         })();
-        // return () => {
-        //     console.log("cleaning up", userInput);
-        //     ignore = true;
-        // };
-    });
+        return () => {
+            console.log("cleaning up", userInput);
+            ignore = true;
+        };
+    }, [userInput]);
 
     return (
         <div className="find-people">
@@ -31,7 +37,9 @@ export default function Findpeople() {
             <ul>
                 {users.map(user => (
                     <li key={user.id}>
-                        {user.first_name} {user.last_name} {user.image_url}
+                        {user.first_name}
+                        {user.last_name}
+                        <img src={user.image_url} />
                     </li>
                 ))}
             </ul>
