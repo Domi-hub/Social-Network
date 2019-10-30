@@ -13,8 +13,8 @@ export default function Findpeople() {
             const { data } = await axios.get("/api/users/" + userInput);
             console.log("Data: ", data);
             if (!userInput) {
-                // const { data } = await axios.get("/api/users/");
-                // setUsers(data);
+                const { data } = await axios.get("/api/users/");
+                setUsers(data);
             } else {
                 const { data } = await axios.get("/api/users/" + userInput);
                 if (!ignore) {

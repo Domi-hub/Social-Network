@@ -62,8 +62,20 @@ module.exports.getMatchingUsers = query => {
         SELECT id, first_name, last_name, image_url
         FROM users
         WHERE first_name ILIKE $1
-        OR last_name ILIKE $1;
+        OR last_name ILIKE $1
+        LIMIT 3;
         `,
         [query + "%"]
+    );
+};
+
+module.exports.getLastThreeUsers = () => {
+    return db.query(
+        `
+        SELECT id, first_name, last_name, image_url
+        FROM users
+        ORDER BY id DESC
+        LIMIT 3;
+        `
     );
 };
