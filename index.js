@@ -130,14 +130,14 @@ app.get("/api/user/:id", (req, res) => {
     const userId = req.params.id;
     const loggedInUserId = req.session.userId;
 
-    if (userId == loggedInUserId) {
+    if (userId === loggedInUserId) {
         res.sendStatus(204);
         return;
     }
 
     db.getUserById(userId)
         .then(result => {
-            if (result.rows == 0) {
+            if (result.rows.count === 0) {
                 res.sendStatus(204);
             } else {
                 res.json(result.rows[0]);
@@ -163,9 +163,66 @@ app.get("/api/users/", (req, res) => {
 
 app.get("/api/users/:query", (req, res) => {
     const query = req.params.query;
+
     db.getMatchingUsers(query)
         .then(result => {
             res.json(result.rows);
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
+app.get("/get-initial-status/:id", (req, res) => {
+    const userId = req.params.id;
+    const loggedInUserId = req.session.userId;
+
+    db.getFriendshipInfo(userId, loggedInUserId)
+        .then(result => {
+            res.json(result.rows[0]);
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
+app.post("/send-friend-request/:id", (req, res) => {
+    const userId = req.params.id;
+    const loggedInUserId = req.session.userId;
+
+    db.addSentRequest(userId, loggedInUserId)
+        .then(result => {
+            res.json(result.rows[0]);
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
+app.post("/accept-friend-request/:id", (req, res) => {
+    const userId = req.params.id;
+    const loggedInUserId = req.session.userId;
+
+    db.addAcceptRequest(userId, loggedInUserId)
+        .then(result => {
+            res.json(result.rows[0]);
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
+app.post("/end-friendship/:id", (req, res) => {
+    const userId = req.params.id;
+    const loggedInUserId = req.session.userId;
+
+    db.deleteFriendship(userId, loggedInUserId)
+        .then(result => {
+            res.json(result.rows[0]);
         })
         .catch(err => {
             console.log(err);

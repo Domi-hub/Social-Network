@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import ReactDOM from "react-dom";
-import axios from "axios";
+import axios from "./axios";
 
 export default function Findpeople() {
     const [users, setUsers] = useState([]);
@@ -9,9 +8,6 @@ export default function Findpeople() {
     useEffect(() => {
         let ignore = false;
         (async () => {
-            console.log("userInput: ", userInput);
-            const { data } = await axios.get("/api/users/" + userInput);
-            console.log("Data: ", data);
             if (!userInput) {
                 const { data } = await axios.get("/api/users/");
                 setUsers(data);
@@ -19,13 +15,10 @@ export default function Findpeople() {
                 const { data } = await axios.get("/api/users/" + userInput);
                 if (!ignore) {
                     setUsers(data);
-                } else {
-                    console.log("ignored!!!");
                 }
             }
         })();
         return () => {
-            console.log("cleaning up", userInput);
             ignore = true;
         };
     }, [userInput]);

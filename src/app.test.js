@@ -1,7 +1,7 @@
 import React from "react";
 import App from "./app";
 import { render, waitForElement } from "@testing-library/react";
-import axios from ".axios";
+import axios from "./axios";
 
 //automatic mock =  i am telling Jest to mock axios for me when Jest does this
 // it will create a dumb copy of axios that includes all the methods of axios I need.

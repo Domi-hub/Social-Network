@@ -53,11 +53,13 @@ img {
 
 /* UPLOADER */
 .uploader {
-    margin-top: 100px;
-    margin-left: 520px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: white;
     width: 500px;
-    height: 100px;
+    height: 200px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
