@@ -85,8 +85,8 @@ app.post("/register", (req, res) => {
                 req.session.userId = user.id;
                 res.json("/welcome");
             })
-            .catch(e => {
-                console.log(e);
+            .catch(err => {
+                console.log(err);
                 res.json("/register", { error: true });
             });
     });
@@ -152,7 +152,6 @@ app.get("/api/user/:id", (req, res) => {
 app.get("/api/users/", (req, res) => {
     db.getLastThreeUsers()
         .then(result => {
-            console.log(result);
             res.json(result.rows);
         })
         .catch(err => {
@@ -273,9 +272,9 @@ app.post("/bio", (req, res) => {
 app.get("/friends-wannabes", (req, res) => {
     const userId = req.session.userId;
 
-    db.getWannabesFriends(userId)
+    db.getFriendsAndWannabes(userId)
         .then(result => {
-            res.json(result.rows[0]);
+            res.json(result.rows);
         })
         .catch(err => {
             console.log(err);

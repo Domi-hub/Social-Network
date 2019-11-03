@@ -1,7 +1,29 @@
 export function reducer(state = {}, action) {
-    console.log("state: ", state);
-    return state;
+    switch (action.type) {
+        case "RECEIVE_USERS":
+            return Object.assign({}, state, {
+                users: action.users
+            });
+        case "ACCEPT_FRIEND":
+            return Object.assign({}, state, {});
+        case "END_FRIENDSHIP":
+            return Object.assign({}, state, {});
+        default:
+            return state;
+    }
 }
+
+// export function reducer(state = {}, action) {
+//     if (action.type == "RECEIVE_USERS") {
+//         state = {
+//             ...state,
+//             users: data
+//         };
+//     }
+//     if (action.type == "ACCEPT_FRIEND") {
+//     }
+// }
+
 //action is an object that describes change we want to do in redux
 // ... - spread operator is good for making copies of arrays and objects
 

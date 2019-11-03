@@ -12,7 +12,7 @@
         "ecmaVersion": 2018
     },
     "rules": {
-        "indent": ["error", 4, { "SwitchCase": 4 }],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
         "semi": ["error", "always"],
         "no-console": 0,
         "no-inner-declarations": 0,
