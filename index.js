@@ -270,6 +270,19 @@ app.post("/bio", (req, res) => {
         });
 });
 
+app.get("/friends-wannabes", (req, res) => {
+    const userId = req.session.userId;
+
+    db.getWannabesFriends(userId)
+        .then(result => {
+            res.json(result.rows[0]);
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
 //DO NOT DELETE - matches all urls
 app.get("*", (req, res) => {
     if (!req.session.userId) {
