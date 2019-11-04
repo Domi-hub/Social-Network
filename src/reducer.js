@@ -5,38 +5,23 @@ export function reducer(state = {}, action) {
                 users: action.users
             });
         case "ACCEPT_FRIEND":
-            return Object.assign({}, state, {});
+            return Object.assign({}, state, {
+                users: state.users.map(user => {
+                    if (action.userId == user.id) {
+                        return {
+                            ...user,
+                            accepted: true
+                        };
+                    } else {
+                        return user;
+                    }
+                })
+            });
         case "END_FRIENDSHIP":
-            return Object.assign({}, state, {});
+            return Object.assign({}, state, {
+                users: state.users.filter(user => action.userId !== user.id)
+            });
         default:
             return state;
     }
 }
-
-// export function reducer(state = {}, action) {
-//     if (action.type == "RECEIVE_USERS") {
-//         state = {
-//             ...state,
-//             users: data
-//         };
-//     }
-//     if (action.type == "ACCEPT_FRIEND") {
-//     }
-// }
-
-//action is an object that describes change we want to do in redux
-// ... - spread operator is good for making copies of arrays and objects
-
-// state = {
-//     ...state
-// };
-
-// let arr = [1, 2, 3]
-// let newArr = [...arr, 5]
-
-// map - array method. it is a loop that allow us to change all or some items
-// in an array. It returns a new array!
-
-//filter - array method. It is a loop, and it is used whenever we need to remove
-// and item or items from an array. It returns a new array that does not include
-// the items we filterd out!

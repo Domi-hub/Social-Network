@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Welcome from "./welcome";
 import { App } from "./app";
+import * as io from "socket.io-client";
 
 //NECESSARY IMPORTS FOR REDUX:
 import { createStore, applyMiddleware } from "redux";
@@ -14,6 +15,10 @@ const store = createStore(
     reducer,
     composeWithDevTools(applyMiddleware(reduxPromise))
 );
+
+// io.connect(); //call console loggedInUserId
+// const socket = io.connect()
+// socket.emit('IamHere')
 
 let elem;
 const userIsLoggedIn = location.pathname != "/welcome";

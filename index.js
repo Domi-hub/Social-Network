@@ -10,6 +10,9 @@ const { s3Url } = require("./config");
 const uidSafe = require("uid-safe");
 const multer = require("multer");
 const path = require("path");
+//SETUP FOR SOCKET.IO:
+const server = require("http").Server(app);
+const io = require("socket.io")(server, { origins: "localhost:8080" });
 
 const diskStorage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -292,6 +295,16 @@ app.get("*", (req, res) => {
 });
 //DO NOT DELETE
 
-app.listen(8080, () => {
+// io.on("connetion", socket => {
+//     console.log(`A socket with the id ${socket.id} just connected`);
+//     socket.on('IamHere', data)
+//     socket.on("disconnect", () => {
+//         console.log(`A socket with the id ${socket.id} just disconnect`);
+//     });
+// io.emit('somebodyNew') //sent to everybody
+//soket.broadcast.emit('excludesomebody')
+// });
+
+server.listen(8080, () => {
     console.log("I'm listening.");
 });

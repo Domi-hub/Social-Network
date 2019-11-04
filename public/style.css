@@ -87,6 +87,28 @@ img {
     height: 400px;
 }
 
+.friends-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.friends {
+    width: 900px;
+    height: 200px;
+    border: black solid 2px;
+    display: flex;
+    flex-direction: row;
+}
+
+.wannabes {
+    margin-top: 50px;
+    height: 200px;
+    width: 900px;
+    border: red solid 2px;
+    display: flex;
+    flex-direction: row;
+}
+
 footer {
     position: fixed;
     left: 0;

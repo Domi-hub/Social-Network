@@ -8,22 +8,18 @@ export async function receiveUsers() {
     };
 }
 
-export async function acceptFriendship({ userId }) {
-    const { data } = await axios.post("/accept-friend-request", {
-        userId: userId
-    });
-    console.log("Accept my friend request: ", data);
+export async function acceptFriendship(userId) {
+    await axios.post("/accept-friend-request/" + userId);
     return {
         type: "ACCEPT_FRIEND",
-        userId: userId
+        userId
     };
 }
 
-export async function endFriendship({ userId }) {
-    const { data } = await axios.post("/friends-wannabes", { userId: userId });
-    console.log("End friendship: ", data);
+export async function endFriendship(userId) {
+    await axios.post("/end-friendship/" + userId);
     return {
         type: "END_FRIENDSHIP",
-        userId: userId
+        userId
     };
 }

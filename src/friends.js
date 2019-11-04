@@ -23,31 +23,50 @@ export default function Friends() {
     }
 
     return (
-        <div>
+        <div className="friends-container">
+            <br />
             <br />
             <br />
             <div>
-                <ul>
+                <h3>Friends Requests</h3>
+                <div className="wannabes">
                     {wannabes.map(u => (
-                        <li key={u.id}>
-                            ({u.first_name},{u.last_name},
+                        <div key={u.id}>
+                            <h4>
+                                {u.first_name} {u.last_name}
+                            </h4>
                             <img src={u.image_url} />
-                            );
-                        </li>
+                            <button
+                                onClick={() => {
+                                    dispatch(acceptFriendship(u.id));
+                                }}
+                            >
+                                Accept Friendship
+                            </button>
+                        </div>
                     ))}
-                </ul>
+                </div>
             </div>
 
             <div>
-                <ul>
+                <h3>Current Friends</h3>
+                <div className="friends">
                     {friends.map(u => (
-                        <li key={u.id}>
-                            ({u.first_name},{u.last_name},
+                        <div key={u.id}>
+                            <h4>
+                                {u.first_name} {u.last_name}
+                            </h4>
                             <img src={u.image_url} />
-                            );
-                        </li>
+                            <button
+                                onClick={() => {
+                                    dispatch(endFriendship(u.id));
+                                }}
+                            >
+                                End Friendship
+                            </button>
+                        </div>
                     ))}
-                </ul>
+                </div>
             </div>
         </div>
     );
