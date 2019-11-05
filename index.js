@@ -39,12 +39,22 @@ app.use(compression()); //it compresses our responses, should be always used!!!!
 app.use(express.static("./public"));
 app.use(express.json());
 
-app.use(
-    cookieSession({
-        secret: `Secret`,
-        maxAge: 1000 * 60 * 60 * 24 * 14
-    })
-);
+// app.use(
+//     cookieSession({
+//         secret: `Secret`,
+//         maxAge: 1000 * 60 * 60 * 24 * 14
+//     })
+// );
+
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(
     express.urlencoded({
@@ -285,6 +295,11 @@ app.get("/friends-wannabes", (req, res) => {
         });
 });
 
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/register");
+});
+
 //DO NOT DELETE - matches all urls
 app.get("*", (req, res) => {
     if (!req.session.userId) {
@@ -307,4 +322,30 @@ app.get("*", (req, res) => {
 
 server.listen(8080, () => {
     console.log("I'm listening.");
+});
+
+//SERVER SIDE SOCKET CODE//
+io.on("connection", function(socket) {
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+
+    const userId = socket.request.session.userId;
+
+    //we want to get last 10 messages...
+    // db.getLastTenChatMessages().then(data => {
+    //     // io.socket.emit("chatMessages", data.rows);
+    // });
+
+    socket.on("My amazing chat message: ", function(msg) {
+        console.log("My amazing chat message: ", msg);
+        io.sockets.emit("chat message", msg);
+    });
+
+    socket.on("newMessage", function(newMessage) {
+        //do stuff in here...
+        //we want to find info about user who sent message...
+        //we want to emit this message OBJECT
+        //we also want to store it in the DB.
+    });
 });

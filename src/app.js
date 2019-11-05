@@ -7,6 +7,8 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { OtherProfile } from "./otherprofile";
 import Findpeople from "./find-people";
 import Friends from "./friends";
+import { Link } from "react-router-dom";
+import { Chat } from "./chat";
 
 export class App extends React.Component {
     constructor() {
@@ -75,8 +77,8 @@ export class App extends React.Component {
                         />
 
                         <Route exact path="/users" component={Findpeople} />
-
                         <Route exact path="/friends" component={Friends} />
+                        <Route exact path="/chat" component={Chat} />
                     </div>
 
                     <div className="main">
@@ -85,6 +87,7 @@ export class App extends React.Component {
                             imageUrl={this.state.imageUrl}
                             onClick={this.toggleModal}
                         />
+                        <a href="/logout">Logout</a>
                     </div>
 
                     <div className="body">

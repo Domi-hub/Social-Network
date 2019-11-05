@@ -13,9 +13,6 @@ export default class Register extends React.Component {
             [target.name]: target.value
         });
     }
-    componentDidMount() {
-        console.log(location);
-    }
     register() {
         if (this.state.email.indexOf("@") == -1) {
             return this.setState({

@@ -109,6 +109,11 @@ img {
     flex-direction: row;
 }
 
+.chat-container {
+    overflow-y: scroll;
+    height: 300px;
+}
+
 footer {
     position: fixed;
     left: 0;

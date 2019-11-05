@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Welcome from "./welcome";
 import { App } from "./app";
-import * as io from "socket.io-client";
+import { init } from "./socket";
 
 //NECESSARY IMPORTS FOR REDUX:
 import { createStore, applyMiddleware } from "redux";
@@ -26,6 +26,7 @@ const userIsLoggedIn = location.pathname != "/welcome";
 if (!userIsLoggedIn) {
     elem = <Welcome />;
 } else {
+    init(store);
     elem = (
         <Provider store={store}>
             <App />
