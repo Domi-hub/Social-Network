@@ -21,6 +21,16 @@ export function reducer(state = {}, action) {
             return Object.assign({}, state, {
                 users: state.users.filter(user => action.userId !== user.id)
             });
+
+        case "GET_CHAT_MESSAGES":
+            return Object.assign({}, state, {
+                messages: action.messages
+            });
+
+        case "ADD_CHAT_MESSAGE":
+            return Object.assign({}, state, {
+                messages: state.messages.concat([action.message])
+            });
         default:
             return state;
     }

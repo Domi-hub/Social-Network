@@ -1,45 +1,40 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { socket } from "./socket";
 
 export function Chat() {
-    const chatMessages = useSelector(state => state && state.chatMessages);
-    const elemRef = useRef(); //change something in ref
+    const messages = useSelector(state => state.messages);
+    const chat = useRef();
 
-    useEffect(() => {
-        console.log("chat mounted");
-        console.log("scroll top:", elemRef.current.scrollTop);
-        console.log("scroll height:", elemRef.current.scrollHeight);
-        console.log("client height:", elemRef.current.clientHeight);
-        elemRef.current.scrollTop =
-            elemRef.current.scrollHeight - elemRef.current.clientHeight;
-    }, []);
+    if (chat.current) {
+        chat.current.scrollTop =
+            chat.current.scrollHeight - chat.current.clientHeight;
+    }
 
     const keyCheck = e => {
         if (e.key === "Enter") {
             e.preventDefault();
-            console.log(e.target.value);
-            console.log(e.key);
-            socket.emit("/my amazingchat message", e.target.value);
+            socket.emit("newChatMessage", e.target.value);
             e.target.value = "";
         }
     };
 
-    console.log("here are the last 10 chat messages: ", chatMessages);
+    if (!messages) {
+        return null;
+    }
 
     return (
-        <div>
-            <h1>CHAT ROOM!!!</h1>
-            <div className="chat-container" ref={elemRef}>
-                <p>chat message will go here...</p>
-                <p>chat message will go here...</p>
-                <p>chat message will go here...</p>
-                <p>chat message will go here...</p>
-                <p>chat message will go here...</p>
-                <p>chat message will go here...</p>
-                <p>chat message will go here...</p>
+        <div className="chat-wrapper">
+            <h1>CHAT ROOM</h1>
+            <div className="chat-container" ref={chat}>
+                {messages.map(m => (
+                    <div key={m.id}>
+                        <p> {m.message} </p>
+                    </div>
+                ))}
             </div>
             <textarea
+                className="chat-textarea"
                 placeholder="Add your chat message here"
                 onKeyDown={keyCheck}
             ></textarea>

@@ -138,3 +138,28 @@ module.exports.getFriendsAndWannabes = userId => {
         [userId]
     );
 };
+
+module.exports.addChatMessage = (msg, userId) => {
+    return db.query(
+        `
+            INSERT INTO chats (message, sender_id)
+            VALUES($1, $2)
+            RETURNING id, message;
+        `,
+        [msg, userId]
+    );
+};
+
+module.exports.getLastTenChatMessages = userId => {
+    return db.query(
+        `
+            SELECT chats.id, image_url, first_name, last_name, message, created_at
+            FROM chats
+            JOIN users
+            ON (chats.sender_id = users.id AND users.id = $1)
+            ORDER BY chats.id DESC
+            limit 10
+        `,
+        [userId]
+    );
+};

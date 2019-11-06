@@ -7,7 +7,6 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { OtherProfile } from "./otherprofile";
 import Findpeople from "./find-people";
 import Friends from "./friends";
-import { Link } from "react-router-dom";
 import { Chat } from "./chat";
 
 export class App extends React.Component {
@@ -81,13 +80,16 @@ export class App extends React.Component {
                         <Route exact path="/chat" component={Chat} />
                     </div>
 
-                    <div className="main">
+                    <div className="navbar">
                         <img className="profileLogo" src="/logo1.jpg" />
+
+                        <a href="/logout">
+                            <button className="logout-button">Logout</button>
+                        </a>
                         <ProfilePic
                             imageUrl={this.state.imageUrl}
                             onClick={this.toggleModal}
                         />
-                        <a href="/logout">Logout</a>
                     </div>
 
                     <div className="body">
@@ -95,7 +97,7 @@ export class App extends React.Component {
                             <Uploader setImage={this.setImage} />
                         )}
                     </div>
-                    <footer>Dominika Tazikova 2019</footer>
+                    <footer>🍋Dominika Tazikova 2019</footer>
                 </div>
             </BrowserRouter>
         );

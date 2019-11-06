@@ -18,7 +18,8 @@ h1 {
     font-weight: 600;
 }
 
-.main {
+/* NAVIGATION BAR */
+.navbar {
     background-color: white;
     position: fixed;
     top: 0;
@@ -27,6 +28,22 @@ h1 {
     height: 80px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.logout-button {
+    background-color: white;
+    border-radius: 20px;
+    border: 2px solid white;
+    height: 40px;
+    width: 80px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.logout-button:hover {
+    background: silver;
+    color: black;
 }
 
 .welcomeLogo {
@@ -109,9 +126,26 @@ img {
     flex-direction: row;
 }
 
+/* CHAT COMPONENT */
+.chat-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 600px;
+}
+
 .chat-container {
     overflow-y: scroll;
     height: 300px;
+    width: 490px;
+    border: 2px solid white;
+    background-color: white;
+    opacity: 0.5;
+}
+
+.chat-textarea {
+    width: 400px;
 }
 
 footer {

@@ -310,16 +310,6 @@ app.get("*", (req, res) => {
 });
 //DO NOT DELETE
 
-// io.on("connetion", socket => {
-//     console.log(`A socket with the id ${socket.id} just connected`);
-//     socket.on('IamHere', data)
-//     socket.on("disconnect", () => {
-//         console.log(`A socket with the id ${socket.id} just disconnect`);
-//     });
-// io.emit('somebodyNew') //sent to everybody
-//soket.broadcast.emit('excludesomebody')
-// });
-
 server.listen(8080, () => {
     console.log("I'm listening.");
 });
@@ -330,19 +320,30 @@ io.on("connection", function(socket) {
         return socket.disconnect(true);
     }
 
-    const userId = socket.request.session.userId;
+    let userId = socket.request.session.userId;
 
     //we want to get last 10 messages...
-    // db.getLastTenChatMessages().then(data => {
-    //     // io.socket.emit("chatMessages", data.rows);
+    db.getLastTenChatMessages(userId)
+        .then(data => {
+            socket.emit("getChatMessages", data.rows);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
+    // socket.on("My amazing chat message: ", function(msg) {
+    //     console.log("My amazing chat message: ", msg);
+    //     io.sockets.emit("chat message", msg);
     // });
 
-    socket.on("My amazing chat message: ", function(msg) {
-        console.log("My amazing chat message: ", msg);
-        io.sockets.emit("chat message", msg);
-    });
-
-    socket.on("newMessage", function(newMessage) {
+    socket.on("newChatMessage", function(msg) {
+        db.addChatMessage(msg, userId)
+            .then(data => {
+                socket.emit("addChatMessage", data.rows[0]);
+            })
+            .catch(err => {
+                console.log(err);
+            });
         //do stuff in here...
         //we want to find info about user who sent message...
         //we want to emit this message OBJECT
