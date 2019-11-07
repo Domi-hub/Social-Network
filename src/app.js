@@ -8,6 +8,7 @@ import { OtherProfile } from "./otherprofile";
 import Findpeople from "./find-people";
 import Friends from "./friends";
 import { Chat } from "./chat";
+import { Link } from "react-router-dom";
 
 export class App extends React.Component {
     constructor() {
@@ -53,6 +54,26 @@ export class App extends React.Component {
         return (
             <BrowserRouter>
                 <div>
+                    <div className="navbar">
+                        <img className="profileLogo" src="/logo1.jpg" />
+                        <nav className="navigation-pane">
+                            <Link to="/">My Profile</Link>
+                            <Link to="/friends">Friends</Link>
+                            <Link to="/users">Find People</Link>
+                            <Link to="/chat">Chat</Link>
+                            <a href="/logout">
+                                <button className="logout-button">
+                                    Logout
+                                </button>
+                            </a>
+                        </nav>
+
+                        <ProfilePic
+                            imageUrl={this.state.imageUrl}
+                            onClick={this.toggleModal}
+                        />
+                    </div>
+
                     <div>
                         <Route
                             exact
@@ -78,18 +99,6 @@ export class App extends React.Component {
                         <Route exact path="/users" component={Findpeople} />
                         <Route exact path="/friends" component={Friends} />
                         <Route exact path="/chat" component={Chat} />
-                    </div>
-
-                    <div className="navbar">
-                        <img className="profileLogo" src="/logo1.jpg" />
-
-                        <a href="/logout">
-                            <button className="logout-button">Logout</button>
-                        </a>
-                        <ProfilePic
-                            imageUrl={this.state.imageUrl}
-                            onClick={this.toggleModal}
-                        />
                     </div>
 
                     <div className="body">

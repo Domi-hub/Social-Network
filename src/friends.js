@@ -27,13 +27,13 @@ export default function Friends() {
             <br />
             <br />
             <div>
-                <h3>Friends Requests</h3>
+                <h4>Friends Requests</h4>
                 <div className="wannabes">
                     {wannabes.map(u => (
                         <div key={u.id}>
-                            <h4>
+                            <h2>
                                 {u.first_name} {u.last_name}
-                            </h4>
+                            </h2>
                             <img src={u.image_url} />
                             <button
                                 onClick={() => {
@@ -48,13 +48,13 @@ export default function Friends() {
             </div>
 
             <div>
-                <h3>Current Friends</h3>
+                <h4>Current Friends</h4>
                 <div className="friends">
                     {friends.map(u => (
                         <div key={u.id}>
-                            <h4>
+                            <h2>
                                 {u.first_name} {u.last_name}
-                            </h4>
+                            </h2>
                             <img src={u.image_url} />
                             <button
                                 onClick={() => {

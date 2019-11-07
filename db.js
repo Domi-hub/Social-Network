@@ -153,12 +153,12 @@ module.exports.addChatMessage = (msg, userId) => {
 module.exports.getLastTenChatMessages = userId => {
     return db.query(
         `
-            SELECT chats.id, image_url, first_name, last_name, message, created_at
+            SELECT chats.id, image_url, first_name, last_name, message, TO_CHAR(created_at :: TIMESTAMP, 'dd Month yyyy, HH:MM:SS') as created_at
             FROM chats
             JOIN users
             ON (chats.sender_id = users.id AND users.id = $1)
             ORDER BY chats.id DESC
-            limit 10
+            LIMIT 10
         `,
         [userId]
     );

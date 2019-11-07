@@ -25,23 +25,31 @@ export default function Findpeople() {
 
     return (
         <div className="find-people">
-            <h1>Find Lemoniac</h1>
-            <h3>Check out last signers</h3>
-            <ul>
-                {users.map(user => (
-                    <li key={user.id}>
-                        {user.first_name}
-                        {user.last_name}
-                        <img src={user.image_url} />
-                    </li>
-                ))}
-            </ul>
-            <h3>Search</h3>
-            <input
-                name="user-input"
-                type="text"
-                onChange={e => setUserInput(e.target.value)}
-            />
+            <h1>Find People</h1>
+            <div className="find-people-container">
+                <h3>Check out last signers</h3>
+                <ul className="find-people-pic">
+                    {users.map(user => (
+                        <li key={user.id}>
+                            <div>
+                                <img src={user.image_url} />
+                            </div>
+                            <div className="find-people-name">
+                                {user.first_name}
+                                {user.last_name}
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+
+                <h3>Search</h3>
+                <input
+                    className="search-input"
+                    name="user-input"
+                    type="text"
+                    onChange={e => setUserInput(e.target.value)}
+                />
+            </div>
         </div>
     );
 }

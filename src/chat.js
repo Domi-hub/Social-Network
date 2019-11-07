@@ -5,7 +5,7 @@ import { socket } from "./socket";
 export function Chat() {
     const messages = useSelector(state => state.messages);
     const chat = useRef();
-    console.log(messages);
+
     useEffect(() => {
         if (chat.current) {
             chat.current.scrollTop =
@@ -30,19 +30,21 @@ export function Chat() {
             <h1>CHAT ROOM</h1>
             <div className="chat-container" ref={chat}>
                 {messages.map(m => (
-                    <div key={m.id}>
+                    <div className="chat-flex" key={m.id}>
                         <img className="chat-photo" src={m.image_url} />
-                        <h4>
-                            {m.first_name} {m.last_name}
-                        </h4>
-
-                        <p> {m.message} </p>
+                        <div className="chat-user">
+                            <h3>
+                                {m.first_name} {m.last_name}
+                            </h3>
+                            <p className="time"> {m.created_at} </p>
+                            <p> {m.message} </p>
+                        </div>
                     </div>
                 ))}
             </div>
             <textarea
                 className="chat-textarea"
-                placeholder="Add your chat message here"
+                placeholder="Chat with us, here..."
                 onKeyDown={keyCheck}
             ></textarea>
         </div>

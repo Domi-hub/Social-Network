@@ -11,14 +11,20 @@ export default class Profile extends React.Component {
     render() {
         return (
             <div className="profile">
-                <h2>
-                    {this.props.firstName} {this.props.lastName}
-                </h2>
-                <ProfilePic
-                    firstName={this.props.firstName}
-                    imageUrl={this.props.imageUrl}
-                />
-                <Bio bio={this.props.bio} setBio={this.props.setBio} />
+                <div className="profile-first">
+                    <h1>
+                        {this.props.firstName} {this.props.lastName}
+                    </h1>
+                    <ProfilePic
+                        firstName={this.props.firstName}
+                        lastName={this.props.lastName}
+                        className="profilePic"
+                        imageUrl={this.props.imageUrl}
+                    />
+                </div>
+                <div className="bio-bio">
+                    <Bio bio={this.props.bio} setBio={this.props.setBio} />
+                </div>
             </div>
         );
     }
