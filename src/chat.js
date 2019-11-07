@@ -1,15 +1,17 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { socket } from "./socket";
 
 export function Chat() {
     const messages = useSelector(state => state.messages);
     const chat = useRef();
-
-    if (chat.current) {
-        chat.current.scrollTop =
-            chat.current.scrollHeight - chat.current.clientHeight;
-    }
+    console.log(messages);
+    useEffect(() => {
+        if (chat.current) {
+            chat.current.scrollTop =
+                chat.current.scrollHeight - chat.current.clientHeight;
+        }
+    }, [messages]);
 
     const keyCheck = e => {
         if (e.key === "Enter") {
@@ -29,6 +31,11 @@ export function Chat() {
             <div className="chat-container" ref={chat}>
                 {messages.map(m => (
                     <div key={m.id}>
+                        <img className="chat-photo" src={m.image_url} />
+                        <h4>
+                            {m.first_name} {m.last_name}
+                        </h4>
+
                         <p> {m.message} </p>
                     </div>
                 ))}

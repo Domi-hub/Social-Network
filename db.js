@@ -163,3 +163,16 @@ module.exports.getLastTenChatMessages = userId => {
         [userId]
     );
 };
+
+module.exports.getAllMessages = () => {
+    return db.query(
+        `
+        SELECT chats.id, chats.message, chats.created_at, users.first_name, users.last_name, users.id AS user_id, users.image_url
+        FROM chats
+        JOIN users
+        ON (chats.sender_id = users.id)
+        ORDER BY chats.id DESC
+        LIMIT 1
+        `
+    );
+};

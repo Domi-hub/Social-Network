@@ -137,15 +137,29 @@ img {
 
 .chat-container {
     overflow-y: scroll;
-    height: 300px;
-    width: 490px;
+    height: 400px;
+    width: 550px;
     border: 2px solid white;
     background-color: white;
     opacity: 0.5;
 }
 
 .chat-textarea {
-    width: 400px;
+    width: 550px;
+    height: 50px;
+    border: 2px solid white;
+}
+
+.chat {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    width: 500px;
+}
+
+.chat-photo {
+    width: 30px;
+    height: 30px;
 }
 
 footer {

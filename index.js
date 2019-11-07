@@ -331,22 +331,15 @@ io.on("connection", function(socket) {
             console.log(err);
         });
 
-    // socket.on("My amazing chat message: ", function(msg) {
-    //     console.log("My amazing chat message: ", msg);
-    //     io.sockets.emit("chat message", msg);
-    // });
-
     socket.on("newChatMessage", function(msg) {
-        db.addChatMessage(msg, userId)
-            .then(data => {
-                socket.emit("addChatMessage", data.rows[0]);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-        //do stuff in here...
-        //we want to find info about user who sent message...
-        //we want to emit this message OBJECT
-        //we also want to store it in the DB.
+        db.addChatMessage(msg, userId).then(() => {
+            db.getAllMessages()
+                .then(data => {
+                    socket.emit("addChatMessage", data.rows[0]);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        });
     });
 });
