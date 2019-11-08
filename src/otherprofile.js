@@ -33,16 +33,21 @@ export class OtherProfile extends React.Component {
 
     render() {
         return (
-            <div className="profile">
-                <h2>
-                    {this.state.firstName} {this.state.lastName}
-                </h2>
-                <ProfilePic
-                    firstName={this.state.firstName}
-                    imageUrl={this.state.imageUrl}
-                />
-                <Bio bio={this.state.bio} />
-                <FriendButton userId={this.props.match.params.id} />
+            <div className="other-profile">
+                <div className="other-profile-name">
+                    <h1>
+                        {this.state.firstName} {this.state.lastName}
+                    </h1>
+                    <ProfilePic
+                        firstName={this.state.firstName}
+                        imageUrl={this.state.imageUrl}
+                        className="profilePic"
+                    />
+                    <FriendButton userId={this.props.match.params.id} />
+                </div>
+                <div className="other-profile-bio">
+                    <Bio bio={this.state.bio} />
+                </div>
             </div>
         );
     }

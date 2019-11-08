@@ -32,11 +32,12 @@ export default function Findpeople() {
                     {users.map(user => (
                         <li key={user.id}>
                             <div>
-                                <img src={user.image_url} />
+                                <a key={user.id} href={`/user/${user.id}`}>
+                                    <img src={user.image_url} />
+                                </a>
                             </div>
                             <div className="find-people-name">
-                                {user.first_name}
-                                {user.last_name}
+                                {user.first_name} {user.last_name}
                             </div>
                         </li>
                     ))}

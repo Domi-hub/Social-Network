@@ -16,11 +16,16 @@ body {
     padding: 0;
 }
 
+img {
+    object-fit: cover;
+}
+
 h1 {
     font-family: Stencil Std, fantasy;
     color: white;
     font-size: 50px;
     font-weight: 600;
+    margin: 0;
 }
 
 h4 {
@@ -34,6 +39,17 @@ input {
     width: 200px;
     height: 25px;
     margin-top: 10px;
+    border-radius: 10px;
+}
+
+button {
+    background-color: white; /* Green */
+    color: black;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
     border-radius: 10px;
 }
 
@@ -56,7 +72,9 @@ input {
     height: 40px;
     width: 80px;
     font-size: 15px;
+    color: black;
     font-weight: bold;
+    padding: 0;
 }
 
 .logout-button:hover {
@@ -67,6 +85,10 @@ input {
 .profileLogo {
     height: 80px;
     width: 80px;
+}
+
+.profileLogo img {
+    border-radius: 10px;
 }
 
 img {
@@ -178,7 +200,6 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0.9;
 }
 
 /* BIO */
@@ -336,6 +357,27 @@ nav a {
 .time {
     padding-top: 0;
     font-size: 12px;
+}
+
+/* OTHER USERS */
+
+.other-profile {
+    width: 900px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.other-profile-bio {
+    margin-left: 50px;
+}
+
+.other-profile-name {
+    flex-direction: column;
+    width: 700px;
+    padding-left: 40px;
 }
 
 h4 {
