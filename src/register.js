@@ -40,7 +40,7 @@ export default class Register extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="registration">
                 {this.state.error && (
                     <div className="error">Oops! That was your fault</div>
                 )}
@@ -65,7 +65,12 @@ export default class Register extends React.Component {
                     placeholder="Password"
                     onChange={e => this.handleChange(e)}
                 />
-                <button onClick={() => this.register()}>REGISTER</button>
+                <button
+                    className="register-button"
+                    onClick={() => this.register()}
+                >
+                    REGISTER
+                </button>
                 <Link to="/login">Click here to Log in!</Link>
             </div>
         );

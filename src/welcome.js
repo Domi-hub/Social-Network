@@ -5,10 +5,8 @@ import Login from "./login";
 
 export default function Welcome() {
     return (
-        <div>
-            <h1>Welcome to </h1>
-            <h1>Lemonade</h1>
-            <img className="welcomeLogo" src="/logo1.jpg" />
+        <div className="welcome">
+            <h1>Welcome to Lemonade</h1>
             <HashRouter>
                 <div>
                     <Route exact path="/" component={Register} />
@@ -18,3 +16,5 @@ export default function Welcome() {
         </div>
     );
 }
+
+//logo: <img className="welcome-logo" src="/logo1.jpg" />

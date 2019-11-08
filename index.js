@@ -323,8 +323,9 @@ io.on("connection", function(socket) {
     let userId = socket.request.session.userId;
 
     //we want to get last 10 messages...
-    db.getLastTenChatMessages(userId)
+    db.getLastTenChatMessages()
         .then(data => {
+            console.log(data.rows);
             socket.emit("getChatMessages", data.rows);
         })
         .catch(err => {
@@ -335,7 +336,7 @@ io.on("connection", function(socket) {
         db.addChatMessage(msg, userId).then(() => {
             db.getAllMessages()
                 .then(data => {
-                    socket.emit("addChatMessage", data.rows[0]);
+                    io.sockets.emit("addChatMessage", data.rows[0]);
                 })
                 .catch(err => {
                     console.log(err);

@@ -150,17 +150,16 @@ module.exports.addChatMessage = (msg, userId) => {
     );
 };
 
-module.exports.getLastTenChatMessages = userId => {
+module.exports.getLastTenChatMessages = () => {
     return db.query(
         `
             SELECT chats.id, image_url, first_name, last_name, message, TO_CHAR(created_at :: TIMESTAMP, 'dd Month yyyy, HH:MM:SS') as created_at
             FROM chats
             JOIN users
-            ON (chats.sender_id = users.id AND users.id = $1)
+            ON chats.sender_id = users.id
             ORDER BY chats.id DESC
             LIMIT 10
-        `,
-        [userId]
+        `
     );
 };
 

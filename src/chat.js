@@ -24,6 +24,7 @@ export function Chat() {
     if (!messages) {
         return null;
     }
+    console.log(messages);
 
     return (
         <div className="chat-wrapper">

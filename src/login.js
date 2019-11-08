@@ -39,7 +39,7 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="login">
                 {this.state.error && (
                     <div className="error">Oops! That was your fault</div>
                 )}
@@ -54,7 +54,9 @@ export default class Login extends React.Component {
                     placeholder="Password"
                     onChange={e => this.handleChange(e)}
                 />
-                <button onClick={() => this.login()}>LOG IN</button>
+                <button className="login-button" onClick={() => this.login()}>
+                    LOG IN
+                </button>
                 <Link to="/">Click here to Register!</Link>
             </div>
         );

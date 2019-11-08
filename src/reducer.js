@@ -29,7 +29,7 @@ export function reducer(state = {}, action) {
 
         case "ADD_CHAT_MESSAGE":
             return Object.assign({}, state, {
-                messages: state.messages.concat([action.message])
+                messages: [...state.messages, action.message]
             });
         default:
             return state;

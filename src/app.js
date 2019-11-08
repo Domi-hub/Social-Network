@@ -71,6 +71,8 @@ export class App extends React.Component {
                         <ProfilePic
                             imageUrl={this.state.imageUrl}
                             onClick={this.toggleModal}
+                            firstName={this.state.firstName}
+                            lastName={this.state.lastName}
                         />
                     </div>
 
